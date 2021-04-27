@@ -46,7 +46,6 @@ input[type=number] {
   box-sizing: border-box;
 }
 #bob_view_bg {
-  background-image: url(img/book_blank.png);
   width:900px;
   height:450px;
 }

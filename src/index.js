@@ -9,7 +9,7 @@ import * as reach from '@reach-sh/stdlib/ETH';
 
 const {standardUnit} = reach;
 const defaultFundAmtStandard = '10';
-const defaultInfo = 'Create Your Story';
+const defaultInfo = 'the cake is a lie';
 const defaultRequestStandard = '0.5';
 
 function renderDOM() {
@@ -26,7 +26,7 @@ class App extends React.Component {
     }
     async componentDidMount() { // from mode: ConnectAccount
         const acc = await reach.getDefaultAccount();
-        const addr = await acc.networkAccount.getAddress();
+        const addr = await acc.getAddress();
         const balAtomic = await reach.balanceOf(acc);
         const bal = reach.formatCurrency(balAtomic, 4);
         try {
