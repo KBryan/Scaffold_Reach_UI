@@ -11,3 +11,92 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+input[type=number] {
+  font-size: calc(10px + 2vmin);
+  width: 4em;
+}
+
+#rps {
+  border-radius: 60px;
+  height:450px;
+  width:950px;
+}
+
+* {
+  box-sizing: border-box;
+}
+#bob_view_bg {
+  background-image: url(img/book_blank.png);
+  width:900px;
+  height:450px;
+}
+/* Create two equal columns that floats next to each other */
+#column {
+  float: left;
+  width: 50%;
+  padding: 30px;
+}
+
+#upload_image {
+  height:30px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#book_css {
+  color: #666666;
+}
+
+button {
+  background-color: #227b8a; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+textarea {
+  font-size: calc(10px + 2vmin);
+  height:160px;
+  width:320px;
+  border-radius:10px;
+}
+
+.ContractInfo {
+  font-size: calc(10px + 1vmin);
+  text-align: left;
+  width: 90vw;
+  height: 22em;
+  padding: 2vw;
+  overflow-x: scroll;
+  white-space: pre;
+}
