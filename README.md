@@ -1,4 +1,4 @@
-# Getting Started with Scaffold Reach App
+# Getting Started with Scaffold Reach
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
