@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+visit the live demo [Reach React Live Demo](https://www.kwamebryan.com/reach_react/)
+
 
 ## Available Scripts
 
