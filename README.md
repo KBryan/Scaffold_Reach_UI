@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 visit the live demo for Ethereum [Reach React Live Demo](https://www.kwamebryan.com/reach_react/)
 
-## Algorand Live is still currently in procees of being upgraded to TEAL3
+### The ReachLang SDK is still currently in procees of being upgraded to suppport TEAL3
 
 * To use this demo open two browsers one for Alice's role and another for Bob's role using the Rinkeby network. Simply follow the instructions provided. 
 
