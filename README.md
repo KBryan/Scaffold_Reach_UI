@@ -8,7 +8,6 @@ visit the live demo for Ethereum [Reach React Live Demo](https://www.kwamebryan.
 
 ### As upgrades to the Reach Lang SDK are being done a workaround is currently implemented using Rand Labs API. Follow the gist for the implementation.
 
-https://gist.github.com/KBryan/7a6e6b66437a652b84e5e6bcf9c5d168 
 
 * To use this demo open two browsers one for Alice's role and another for Bob's role using the Rinkeby network. Simply follow the instructions provided. 
 
