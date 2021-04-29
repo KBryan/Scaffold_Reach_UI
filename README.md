@@ -8,8 +8,9 @@ visit the live demo for Ethereum [Reach React Live Demo](https://www.kwamebryan.
 
 ### As upgrades to the Reach Lang SDK are being done a workaround is currently implemented using Rand Labs API. Follow the gist for the implementation.
 
+* https://gist.github.com/KBryan/8bf43f917aad00b506b875dc3e9ae0a5
 
-* To use this demo open two browsers one for Alice's role and another for Bob's role using the Rinkeby network. Simply follow the instructions provided. 
+To use this demo open two browsers one for Alice's role and another for Bob's role using the Rinkeby network. Simply follow the instructions provided. 
 
 visit the live demo for Algorand [Reach React Live Demo](https://www.kwamebryan.com/reach_algo/)
 
