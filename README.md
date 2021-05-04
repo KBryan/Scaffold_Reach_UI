@@ -14,6 +14,10 @@ To use this demo open two browsers one for Alice's role and another for Bob's ro
 
 visit the live demo for Algorand [Reach React Live Demo](https://www.kwamebryan.com/reach_algo/)
 
+## Youtube video showing Reach UI
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/P_JYsp18K2E/0.jpg)](https://www.youtube.com/watch?v=P_JYsp18K2E)
+
 ## Available Scripts
 
 Start with git clone to your local directory, you can run:
