@@ -20,10 +20,7 @@ function renderDOM() {
         document.getElementById('root')
     );
 }
-/*
-"If your gift is to encourage others, be encouraging. If it is giving, give generously. If God has given you leadership ability, take the responsibility seriously. And if you have a gift for showing kindness to others, do it gladly."
-Romans 12:8
- */
+
 class App extends React.Component {
     constructor(props) {
         super(props);
