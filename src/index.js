@@ -5,7 +5,9 @@ import * as AppViews from './views/AppViews';
 import * as AliceViews from './views/AliceViews';
 import * as BobViews from './views/BobViews';
 import * as backend from './build/index.main.mjs';
-import * as reach from '@reach-sh/stdlib/ETH';
+import * as reach from '@reach-sh/stdlib/ALGO';
+reach.setSignStrategy('AlgoSigner');
+reach.setProviderByName('MainNet');
 
 const {standardUnit} = reach;
 const defaultFundAmtStandard = '10';
@@ -18,14 +20,19 @@ function renderDOM() {
         document.getElementById('root')
     );
 }
-
+/*
+"If your gift is to encourage others, be encouraging. If it is giving, give generously. If God has given you leadership ability, take the responsibility seriously. And if you have a gift for showing kindness to others, do it gladly."
+Romans 12:8
+ */
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {mode: 'ConnectAccount'}
     }
     async componentDidMount() { // from mode: ConnectAccount
-        const acc = await reach.getDefaultAccount();
+        // connect algosigner
+
+        const acc = await  reach.getDefaultAccount();
         const addr = await acc.getAddress();
         const balAtomic = await reach.balanceOf(acc);
         const bal = reach.formatCurrency(balAtomic, 4);

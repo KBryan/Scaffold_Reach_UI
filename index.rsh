@@ -1,19 +1,16 @@
 'reach 0.1';
-'use strict';
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 
 export const main =
     Reach.App(
-        {
-            deployMode: 'firstMsg',
-            connectors: [ETH],
-        },
+        { deployMode: 'firstMsg'},
         [Participant('Alice', { request: UInt,
             info: Bytes(128) }),
             Participant('Bob', { want: Fun([UInt], Null),
                 got: Fun([Bytes(128)], Null) })],
         (A, B) => {
+
             A.only(() => {
                 const request = declassify(interact.request); });
             A.publish(request);
