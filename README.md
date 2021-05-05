@@ -6,9 +6,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 visit the live demo for Ethereum [Reach React Live Demo](https://www.kwamebryan.com/reach_react/)
 
-### As upgrades to the Reach Lang SDK are being done a workaround is currently implemented using Rand Labs API. Follow the gist for the implementation.
+### An implementation has currently been implemented that require edits to index.js follow the link below.
 
-* https://gist.github.com/KBryan/8bf43f917aad00b506b875dc3e9ae0a5
+* https://gist.github.com/KBryan/a2da2c95781b233cf7b8148722a6a21b
 
 To use this demo open two browsers one for Alice's role and another for Bob's role using the Rinkeby network. Simply follow the instructions provided. 
 
