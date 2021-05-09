@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 visit the live demo for Ethereum [Reach React Live Demo](https://www.kwamebryan.com/reach_react/)
 
-### An implementation has currently been implemented that require edits to index.js follow the link below.
+### An Algorand Blockchain implementation has currently been implemented that require edits to index.js follow the link below.
 
 * https://gist.github.com/KBryan/a2da2c95781b233cf7b8148722a6a21b
 
