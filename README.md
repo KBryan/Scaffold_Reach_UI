@@ -10,7 +10,7 @@ visit the live demo for Ethereum [Reach React Live Demo](https://www.kwamebryan.
 
 * https://gist.github.com/KBryan/a2da2c95781b233cf7b8148722a6a21b
 
-To use this demo open two browsers one for Alice's role and another for Bob's role using the Rinkeby network. Simply follow the instructions provided. 
+To use this demo open two browsers one for Alice's role and another for Bob's role using the Algorand network. You will need to have AlgoSigner configured to use this example.
 
 visit the live demo for Algorand [Reach React Live Demo](https://www.kwamebryan.com/reach_algo/)
 
