@@ -3,16 +3,24 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 
+const Alice = {
+    request:UInt,
+    info:Bytes(128)
+};
+
+const Bob = {
+    want:Fun([UInt], Null),
+    got:Fun([Bytes(128)], Null)
+};
+
 export const main =
     Reach.App(
         {
             deployMode: 'firstMsg',
             connectors: [ETH],
         },
-        [Participant('Alice', { request: UInt,
-            info: Bytes(128) }),
-            Participant('Bob', { want: Fun([UInt], Null),
-                got: Fun([Bytes(128)], Null) })],
+        [Participant('Alice', Alice),
+            Participant('Bob', Bob)],
         (A, B) => {
             A.only(() => {
                 const request = declassify(interact.request); });
