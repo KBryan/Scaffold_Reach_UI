@@ -16,9 +16,7 @@ const Bob = {
 export const main =
     Reach.App(
         {
-            deployMode: 'firstMsg',
-            connectors: [ETH],
-        },
+            deployMode: 'firstMsg'},
         [Participant('Alice', Alice),
             Participant('Bob', Bob)],
         (A, B) => {

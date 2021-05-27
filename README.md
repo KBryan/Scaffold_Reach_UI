@@ -2,17 +2,21 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-* To use this demo open two browsers one for Alice's role and another for Bob's role using the Rinkeby network. Simply follow the instructions provided. 
+* To use this demo open two browsers one for Alice's role and another for Bob's role using the Rinkeby network. Or deploy the contract to the ETH chain of choice from Metamask Simply follow the instructions provided for configuring MetaMask to your desired network. 
 
 visit the live demo for Ethereum [Reach React Live Demo](https://www.kwamebryan.com/reach_react/)
 
-### As upgrades to the Reach Lang SDK are being done a workaround is currently implemented using Rand Labs API. Follow the gist for the implementation.
+### An Algorand Blockchain implementation has currently been implemented that require edits to index.js follow the link below.
 
-* https://gist.github.com/KBryan/8bf43f917aad00b506b875dc3e9ae0a5
+* https://gist.github.com/KBryan/a2da2c95781b233cf7b8148722a6a21b
 
-To use this demo open two browsers one for Alice's role and another for Bob's role using the Rinkeby network. Simply follow the instructions provided. 
+To use this demo open two browsers one for Alice's role and another for Bob's role using the Algorand network. You will need to have AlgoSigner configured to use this example.
 
 visit the live demo for Algorand [Reach React Live Demo](https://www.kwamebryan.com/reach_algo/)
+
+## Youtube video showing Reach UI
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/P_JYsp18K2E/0.jpg)](https://www.youtube.com/watch?v=P_JYsp18K2E)
 
 ## Available Scripts
 
