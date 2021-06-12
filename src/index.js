@@ -1,137 +1,252 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import AppViews from './views/AppViews';
+import DeployerViews from './views/DeployerViews';
+import AttacherViews from './views/AttacherViews';
+import { renderDOM, renderView } from './views/render';
 import './index.css';
-import * as AppViews from './views/AppViews';
-import * as AliceViews from './views/AliceViews';
-import * as BobViews from './views/BobViews';
 import * as backend from './build/index.main.mjs';
 import * as reach from '@reach-sh/stdlib/ETH';
+import { ContextProvider } from './AppContext';
 
-const {standardUnit} = reach;
-const defaultFundAmtStandard = '10';
-const defaultInfo = 'the cake is a lie';
-const defaultRequestStandard = '0.5';
+//#region Enums
 
-function renderDOM() {
-  ReactDOM.render(
-    <React.StrictMode><App /></React.StrictMode>,
-    document.getElementById('root')
-  );
-}
+const RESOURCES = { 'POTATO': 0, 'ORE': 1, 'WOOD': 2, 'BRICK': 3 };
+const PLAYERS = { 'NONE': 0, 'ALICE': 1, 'BOB': 2, 'CARL': 3 };
+
+//#endregion
+
+const { standardUnit } = reach;
+const defaults = { defaultFundAmt: '10', defaultWager: '3', standardUnit };
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {mode: 'ConnectAccount'}
+    this.state = { view: 'ConnectAccount', ...defaults };
   }
-  async componentDidMount() { // from mode: ConnectAccount
+  async componentDidMount() {
     const acc = await reach.getDefaultAccount();
-    const addr = await acc.getAddress();
     const balAtomic = await reach.balanceOf(acc);
     const bal = reach.formatCurrency(balAtomic, 4);
+    this.setState({ acc, bal });
     try {
       const faucet = await reach.getFaucet();
-      this.setState({mode: 'FundAccount', acc, addr, bal, faucet});
+      this.setState({ view: 'FundAccount', faucet });
     } catch (e) {
-      this.setState({mode: 'SelectRole', acc, addr, bal});
+      this.setState({ view: 'DeployerOrAttacher' });
     }
   }
-  fundAccount(fundAmountStandard) { // from mode: FundAccount
-    const {faucet, acc} = this.state;
-    const amountAtomic = reach.parseCurrency(fundAmountStandard || defaultFundAmtStandard);
-    reach.transfer(faucet, acc, amountAtomic);
-    this.setState({mode: 'SelectRole'});
+  async fundAccount(fundAmount) {
+    await reach.transfer(this.state.faucet, this.state.acc, reach.parseCurrency(fundAmount));
+    this.setState({ view: 'DeployerOrAttacher' });
   }
-  skipFundAccount() { this.setState({mode: 'SelectRole'}); } // from mode: FundAccount
-  selectRole(role) { this.setState({mode: 'RunRole', role}); } // from mode: SelectRole
-  selectBob() { this.selectRole(<Bob acc={this.state.acc} />); }
-  selectAlice() { this.selectRole(<Alice acc={this.state.acc} />); }
-  render() {
-    const {mode, addr, bal, role} = this.state;
-    const parent = this;
-    let app = null;
-    if (mode === 'ConnectAccount') {
-      app = <AppViews.ConnectAccount />
-    } else if (mode === 'FundAccount') {
-      app = <AppViews.FundAccount {...{parent, addr, bal, standardUnit, defaultFundAmtStandard}} />
-    } else if (mode === 'SelectRole') {
-      app = <AppViews.SelectRole {...{parent}} />
-    } else { // 'RunRole'
-      app = role;
-    }
-    return <AppViews.Wrapper {...{app}} />;
+  async skipFundAccount() { this.setState({ view: 'DeployerOrAttacher' }); }
+  selectDeployer() { this.setState({ view: 'Wrapper', ContentView: DeployerAlice }); }
+  selectAttacher() { this.setState({ view: 'Wrapper', ContentView: AttacherBob }); }
+  selectAttacherTwo() { this.setState({ view: 'Wrapper', ContentView: AttacherCarl }); }
+  render() { return renderView(this, AppViews); }
+}
+
+
+
+//#region Participant Classes
+
+// Each class represents a participant as defined in index.rsh
+// Deployer is Alice
+// Attacher(s) are Bob and Carl
+
+class Player extends React.Component {
+  random() { return reach.hasRandom.random(); }
+  log(logData) { console.log("REACH LOG:", logData); }
+  informTimeout() {
+    console.log("Timeout is being informed.");
+    this.setState({ view: 'Timeout' });
+  }
+
+  // Map Generation
+  getSeed() {
+    let seed = Math.floor(Math.random() * (10000000));
+    this.setState({ view: 'Generating' });
+    console.log("Seed is being requested.", seed);
+    return seed;
+  }
+  seeMap(tileArray) {
+    console.log("Map data is being sent.", tileArray);
+    this.setState({
+      view: 'MapDisplay',
+      tiles: tileArray,
+      resources: [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+      ]
+    });
+  }
+
+  // Gameplay
+  seeGameState(data) {
+    console.log("Game state data is being sent.", data);
+    this.setState({
+      resources: data['resources'],
+      roll: data['roll'],
+      winner: data['winner'],
+      phase: data['phase'],
+      turn: data['turn'] - 1, // in the frontend, alice = 0, not 1
+      buildings: data['buildings']
+    });
+  }
+
+  // Building Phase
+  async placeBuilding() {
+    const buildPromise = await new Promise(resolveBuildP => {
+      this.setState({ bPlayable: true, resolveBuildP: resolveBuildP });
+    });
+
+    this.setState({ bPlayable: false, resolveBuildP: null });
+
+    console.log("Requesting a place building", buildPromise);
+    return buildPromise;
+  }
+  playBuilding(play) {
+    console.log("Play building:", this.state)
+    this.state.resolveBuildP(play);
+  }
+  placeBuildingCallback(buildingSuccessful) {
+    console.log("Was the placing successful?", buildingSuccessful);
+  }
+
+  // Trade Phase
+  async offerTrade() {
+    const tradePromise = await new Promise(resolveTradeP => {
+      this.setState({ tPlayable: true, resolveTradeP: resolveTradeP });
+    });
+
+    this.setState({ tPlayable: false, resolveTradeP: null });
+
+    console.log("Requesting a trade offer", tradePromise);
+  }
+  playOffer(play) {
+    console.log("Play trade offer:", this.state);
+    this.state.resolveTradeP(play);
+  }
+  offerTradeCallback(offerAccepted) {
+    console.log("Was the offer accepted?", offerAccepted);
+  }
+  async recieveTradeOffer(offer) {
+    const recieveOfferPromise = await new Promise(resolveOfferP => {
+      this.setState({ oPlayable: true, offer: offer, resolveOfferP: resolveOfferP });
+    });
+
+    this.setState({ oPlayable: false, resolveOfferP: null });
+
+    console.log("Responding to trade offer", recieveOfferPromise);
+  }
+  playOfferReply(play) {
+    console.log("Returning the trade offer", this.state);
+    this.state.resolveOfferP(play);
   }
 }
 
-class Alice extends React.Component {
+class DeployerAlice extends Player {
   constructor(props) {
     super(props);
-    this.state = { mode: 'Deploy'};
+    this.state = { view: 'SetWager' };
   }
-  async deploy() { // from mode: Deploy
+
+  // the deployment of the backend & start of the instance
+  async deploy() {
+    console.log("Starting deployment.");
+    console.log("Player: " + this.state.playerNum);
+
     const ctc = this.props.acc.deploy(backend);
-    this.setState({mode: 'EnterInfo', ctc});
+    this.setState({ view: 'Deploying', ctc });
+
+    // preliminary setting of values
+    this.wager = reach.parseCurrency(this.state.wager); // UInt
+    this.testaroonie = 4;
+
+    backend.Alice(ctc, this);
     const ctcInfoStr = JSON.stringify(await ctc.getInfo(), null, 2);
-    this.setState({ctcInfoStr});
+    this.setState({ view: 'WaitingForAttacher', ctcInfoStr });
   }
-  enterInfo(info) { this.setState({mode: 'EnterRequest', info}); } // from mode: EnterInfo
-  enterRequest(requestStandard) { this.setState({mode: 'RunBackend', requestStandard}); } // from mode: EnterRequest
-  async runBackend() { // from mode: RunBackend
-    const {ctc, requestStandard, info} = this.state;
-    this.setState({mode: 'BackendRunning'});
-    const request = reach.parseCurrency(requestStandard);
-    await backend.Alice(ctc, {request, info});
-    this.setState({mode: 'BackendRan'});
+
+  setWager(wager) {
+    console.log("Wager being set.", wager);
+    this.setState({ view: 'Deploy', wager });
   }
+
   render() {
-    let alice = null;
-    const parent = this;
-    const {mode, ctcInfoStr, requestStandard, info} = this.state;
-    if (mode === 'Deploy') {
-      alice = <AliceViews.Deploy {...{parent}} />;
-    } else if (mode === 'EnterInfo') {
-      alice = <AliceViews.EnterInfo {...{parent, defaultInfo}} />;
-    } else if (mode === 'EnterRequest') {
-      alice = <AliceViews.EnterRequest {...{parent, standardUnit, defaultRequestStandard}} />;
-    } else if (mode === 'RunBackend') {
-      alice = <AliceViews.RunBackend {...{parent, info, requestStandard, standardUnit}} />;
-    } else if (mode === 'BackendRunning') {
-      alice = <AliceViews.BackendRunning {...{ctcInfoStr}} />;
-    } else { // 'BackendRan'
-      alice = <AliceViews.BackendRan />;
-    }
-    return <AliceViews.AliceWrapper {...{alice}} />
+    return (
+      <ContextProvider value={{ playerNum: 0 }}>
+        {renderView(this, DeployerViews)}
+      </ContextProvider>
+    );
   }
 }
 
-class Bob extends React.Component {
+class AttacherBob extends Player {
   constructor(props) {
     super(props);
-    this.state = {mode: 'RunBackend'};
+    this.state = { view: 'Attach' };
   }
-  async runBackend(ctcInfoStr) { // from mode: RunBackend
-    const ctcInfo = JSON.parse(ctcInfoStr);
-    const ctc = this.props.acc.attach(backend, ctcInfo);
-    this.setState({mode: 'ApproveRequest'});
-    const interact = {
-      want: (request) => this.setState({mode: 'DisplayInfo', requestStandard: reach.formatCurrency(request, 4)}),
-      got: (info) => this.setState({info}),
-    };
-    await backend.Bob(ctc, interact);
+
+  // attaching to the specified backend
+  attach(ctcInfoStr) {
+    console.log("Attaching...");
+
+    const ctc = this.props.acc.attach(backend, JSON.parse(ctcInfoStr));
+    this.setState({ view: 'Attaching' });
+    backend.Bob(ctc, this);
   }
+
+  async acceptWager(wagerAtomic) { // Fun([UInt], Null)
+    console.log("Wager price accepted.", wagerAtomic);
+
+    const wager = reach.formatCurrency(wagerAtomic, 4);
+    return await new Promise(resolveAcceptedP => {
+      this.setState({ view: 'AcceptTerms', wager, resolveAcceptedP });
+    });
+  }
+
+  termsAccepted() {
+    console.log("Terms accepted");
+
+    this.state.resolveAcceptedP();
+    this.setState({ view: 'WaitingForTurn' });
+  }
+
   render() {
-    let bob = null;
-    const parent = this;
-    const {mode, requestStandard, info} = this.state;
-    if (mode === 'RunBackend') {
-      bob = <BobViews.RunBackend {...{parent}} />
-    } else if (mode === 'ApproveRequest') {
-      bob = <BobViews.ApproveRequest {...{requestStandard}} />;
-    } else { // 'DisplayInfo'
-      bob = <BobViews.DisplayInfo {...{info}} />
-    }
-    return <BobViews.BobWrapper {...{bob}} />;
+    return (
+      <ContextProvider value={{ playerNum: 1 }}>
+        {renderView(this, AttacherViews)}
+      </ContextProvider>
+    );
   }
 }
 
-renderDOM();
+class AttacherCarl extends AttacherBob {
+  constructor(props) {
+    super(props);
+    this.state = { view: 'Attach', playerNum: 2 };
+  }
+
+  // attaching to the specified backend
+  attach(ctcInfoStr) {
+    console.log("Attaching...");
+
+    const ctc = this.props.acc.attach(backend, JSON.parse(ctcInfoStr));
+    this.setState({ view: 'Attaching' });
+    backend.Carl(ctc, this);
+  }
+
+  render() {
+    return (
+      <ContextProvider value={{ playerNum: 2 }}>
+        {renderView(this, AttacherViews)}
+      </ContextProvider>
+    );
+  }
+}
+
+//#endregion
+
+renderDOM(<App />);
