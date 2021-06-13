@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Heading, Text } from "rimble-ui";
+import {  Button, Text } from "rimble-ui";
 
 
 export class Wrapper extends React.Component {

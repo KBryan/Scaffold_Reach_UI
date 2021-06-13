@@ -1,6 +1,9 @@
 import React from 'react';
-import { Box, Button, Heading, Text } from "rimble-ui";
+import { Button, Heading, Text } from "rimble-ui";
+import { MetaMaskButton } from 'rimble-ui';
+import { EthAddress } from "rimble-ui";
 
+const ETH_ADDRESS = "0x9505C8Fc1aD98b0aC651b91245d02D055fEc8E49";
 
 const sleep = (milliseconds) => new Promise(resolve => setTimeout(resolve, milliseconds));
 
@@ -26,6 +29,8 @@ export class EnterInfo extends React.Component {
         const {info} = this.state || {};
         return (
             <div>
+                <EthAddress address={ETH_ADDRESS} />
+
                 <Text>
                     Alice, what is your secret info?
                 </Text>
@@ -35,8 +40,7 @@ export class EnterInfo extends React.Component {
                     placeholder={defaultInfo}
                 />
                 <br />
-                <Button onClick={() => parent.enterInfo(info || defaultInfo)}
-                ><Text>Submit secret info</Text></Button>
+                <MetaMaskButton  onClick={() => parent.enterInfo(info || defaultInfo)}>Submit Secret Info</MetaMaskButton><br/>
             </div>
         );
     }
@@ -58,8 +62,7 @@ export class EnterRequest extends React.Component {
                     placeholder={defaultRequestStandard}
                 />
                 <br /> <br />
-                <Button onClick={() => parent.enterRequest(req || defaultRequestStandard)}
-                ><Text>Submit request</Text></Button>
+                <MetaMaskButton  onClick={() => parent.enterRequest(req || defaultRequestStandard)}>Submit request</MetaMaskButton><br/>
             </div>
         );
     }
@@ -75,6 +78,9 @@ export class RunBackend extends React.Component {
                     to reveal secret info: <strong>{info}</strong>
                 </Text>
                 <Text>
+                    Your Address
+                </Text>
+                <Text>
                     Ready to connect to the contract?
                 </Text>
                 <Text>
@@ -83,9 +89,8 @@ export class RunBackend extends React.Component {
                     and the second will publish your secret while simultaneously
                     retrieving the requested amount from the contract.
                 </Text>
-                <Button
-                    onClick={() => parent.runBackend()}
-                ><Text>Connect</Text></Button>
+                <MetaMaskButton  onClick={() => parent.runBackend()}>Connect</MetaMaskButton><br/>
+
             </div>
         );
     }
