@@ -13,20 +13,8 @@ const Bob = {
         want:Fun([UInt], Null),
         got:Fun([Bytes(128)], Null)
 };
-/*
-He who dwells in the shelter of the Most High will rest in the shadow of the Almighty.
-Psalm 91:1
-
-Your unfailing love is better than life itself; how I praise you!
-Psalm 63:3
-
-Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.
-Ephesians 1:3
 
 
- */
-
-const SOME_DATA = "Something";
 export const main =
     Reach.App(
         {
