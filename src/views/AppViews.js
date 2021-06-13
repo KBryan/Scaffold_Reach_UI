@@ -1,4 +1,6 @@
 import React from 'react';
+import { Box, Button, Heading, Text } from "rimble-ui";
+
 
 export class Wrapper extends React.Component {
     render() {
@@ -17,8 +19,11 @@ export class ConnectAccount extends React.Component {
     render() {
         return (
             <div>
-                Please wait while we connect to your account.
-                If this takes more than a few seconds, there may be something wrong.
+                <Text>
+                    Please wait while we connect to your account.
+                    If this takes more than a few seconds, there may be something wrong.
+                </Text>
+
             </div>
         )
     }
@@ -49,8 +54,8 @@ export class FundAccount extends React.Component {
                     placeholder={defaultFundAmtStandard}
                     onChange={(e) => this.setState({amt: e.currentTarget.value})}
                 />
-                <button onClick={() => parent.fundAccount(this.state.amt)}>Fund Account</button>
-                <button onClick={() => parent.skipFundAccount()}>Skip</button>
+                <Button onClick={() => parent.fundAccount(this.state.amt)}>Fund Account</Button>
+                <Button onClick={() => parent.skipFundAccount()}>Skip</Button>
             </div>
         );
     }
@@ -61,20 +66,21 @@ export class SelectRole extends React.Component {
         const {parent} = this.props;
         return (
             <div>
-                Please select a role:
-                <br />
-                <p>
-                    <button
+                <Text>
+                    Please select a role:
+                </Text>
+                <Text>
+                    <Button
                         onClick={() => parent.selectAlice()}
-                    >Alice</button>
+                    >Alice</Button>
                     <br /> Requests payment from Bob in order to reveal a secret.
-                </p>
-                <p>
-                    <button
+                </Text>
+                <Text>
+                    <Button
                         onClick={() => parent.selectBob()}
-                    >Bob</button>
+                    >Bob</Button>
                     <br /> Pays Alice in order for her to reveal a secret.
-                </p>
+                </Text>
             </div>
         );
     }

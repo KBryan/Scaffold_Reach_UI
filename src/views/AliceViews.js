@@ -1,4 +1,6 @@
 import React from 'react';
+import { Box, Button, Heading, Text } from "rimble-ui";
+
 
 const sleep = (milliseconds) => new Promise(resolve => setTimeout(resolve, milliseconds));
 
@@ -7,11 +9,12 @@ export class Deploy extends React.Component {
         const {parent} = this.props;
         return (
             <div>
-                As Alice, it is your job to deploy the contract.
-                <br />
-                <button
+                <Text>
+                    As Alice, it is your job to deploy the contract.
+                </Text>
+                <Button
                     onClick={() => parent.deploy()}
-                >Deploy</button>
+                ><Text>Deploy</Text></Button>
             </div>
         );
     }
@@ -23,15 +26,17 @@ export class EnterInfo extends React.Component {
         const {info} = this.state || {};
         return (
             <div>
-                Alice, what is your secret info?
+                <Text>
+                    Alice, what is your secret info?
+                </Text>
                 <br />
                 <textarea
                     onChange={(e) => this.setState({info: e.currentTarget.value})}
                     placeholder={defaultInfo}
                 />
                 <br />
-                <button onClick={() => parent.enterInfo(info || defaultInfo)}
-                >Submit secret info</button>
+                <Button onClick={() => parent.enterInfo(info || defaultInfo)}
+                ><Text>Submit secret info</Text></Button>
             </div>
         );
     }
@@ -43,17 +48,18 @@ export class EnterRequest extends React.Component {
         const {req} = this.state || {};
         return (
             <div>
+                <Text>
                 Alice, how much {standardUnit} should Bob pay you
                 to reveal this info?
-                <br />
+                </Text>
                 <input
                     type='number'
                     onChange={(e) => this.setState({req: e.currentTarget.value})}
                     placeholder={defaultRequestStandard}
                 />
-                <br />
-                <button onClick={() => parent.enterRequest(req || defaultRequestStandard)}
-                >Submit request</button>
+                <br /> <br />
+                <Button onClick={() => parent.enterRequest(req || defaultRequestStandard)}
+                ><Text>Submit request</Text></Button>
             </div>
         );
     }
@@ -64,22 +70,22 @@ export class RunBackend extends React.Component {
         const {parent, info, requestStandard, standardUnit} = this.props;
         return (
             <div>
-                <p>
+                <Text>
                     You request <strong>{requestStandard}</strong> {standardUnit + ' '}
                     to reveal secret info: <strong>{info}</strong>
-                </p>
-                <p>
+                </Text>
+                <Text>
                     Ready to connect to the contract?
-                </p>
-                <p>
+                </Text>
+                <Text>
                     You will be prompted to pay for two transactions.
                     The first transaction will publish your requested amount,
                     and the second will publish your secret while simultaneously
                     retrieving the requested amount from the contract.
-                </p>
-                <button
+                </Text>
+                <Button
                     onClick={() => parent.runBackend()}
-                >Connect</button>
+                ><Text>Connect</Text></Button>
             </div>
         );
     }
@@ -102,17 +108,19 @@ export class BackendRunning extends React.Component {
         if (ctcInfoStr === undefined) {
             return (
                 <div>
+                    <Text>
                     Waiting for the contract to deploy...
                     If this takes more than 1 min, something may be wrong.
+                    </Text>
                 </div>
             )
         } else {
             return (
                 <div>
-                    <h2>Contract Info</h2>
-                    The contract is running!
+                    <Heading>Contract Info</Heading>
+                    <Text>The contract is running!
                     Please give Bob the following contract info.
-
+                    </Text>
                     <pre className='ContractInfo'>
             {ctcInfoStr}
           </pre>
@@ -134,8 +142,10 @@ export class BackendRan extends React.Component {
     render() {
         return (
             <div>
-                Thank you, Alice.
-                The contract has run to completion.
+                <Text>
+                    Thank you, Alice.
+                    The contract has run to completion.
+                </Text>
             </div>
         );
     }

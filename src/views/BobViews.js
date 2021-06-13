@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box, Button, Heading, Text } from "rimble-ui";
 
 export class RunBackend extends React.Component {
     render() {
@@ -6,10 +7,12 @@ export class RunBackend extends React.Component {
         const {ctcInfoStr} = this.state || {};
         return (
             <div>
-                Alice will deploy the contract.
-                <br />
-                Ask Alice for her contract info and paste it here:
-                <br />
+                <Text>
+                    Alice will deploy the contract.
+                </Text>
+                <Text>
+                    Ask Alice for her contract info and paste it here:
+                </Text>
                 <textarea
                     className='ContractInfo'
                     spellCheck='false'
@@ -17,10 +20,10 @@ export class RunBackend extends React.Component {
                     placeholder='{}'
                 />
                 <br />
-                <button
+                <Button
                     disabled={!ctcInfoStr}
                     onClick={() => parent.runBackend(ctcInfoStr)}
-                >Connect</button>
+                ><Text>Connect</Text></Button>
             </div>
         );
     }
@@ -31,16 +34,16 @@ export class ApproveRequest extends React.Component {
         const {requestStandard} = this.props;
         if (!requestStandard) {
             return (
-                <p>
+                <Text>
                     Once Alice has submitted her requested amount,
                     you will be prompted to pay it.
-                </p>
+                </Text>
             );
         } else {
             return (
-                <p>
+                <Text>
                     You have received a prompt to pay Alice's requested amount.
-                </p>
+                </Text>
             );
         }
     }
@@ -51,19 +54,19 @@ export class DisplayInfo extends React.Component {
         const {info} = this.props;
         if (!info) {
             return (
-                <p>
+                <Text>
                     Waiting for Alice to reveal her secret info...
-                </p>
+                </Text>
             );
         } else {
             return (
                 <div>
-                    <p>
+                    <Text>
                         Alice's secret info is: <strong>{info}</strong>
-                    </p>
-                    <p>
+                    </Text>
+                    <Text>
                         Thank you, Bob. The contract has run to completion.
-                    </p>
+                    </Text>
                 </div>
             );
         }

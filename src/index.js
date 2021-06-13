@@ -14,8 +14,8 @@ const defaultRequestStandard = '0.5';
 
 function renderDOM() {
   ReactDOM.render(
-    <React.StrictMode><App /></React.StrictMode>,
-    document.getElementById('root')
+      <React.StrictMode><App /></React.StrictMode>,
+      document.getElementById('root')
   );
 }
 
