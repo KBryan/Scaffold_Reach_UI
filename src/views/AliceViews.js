@@ -15,7 +15,7 @@ export class Deploy extends React.Component {
                 <Text>
                     As Alice, it is your job to deploy the contract.
                 </Text>
-                <Button
+                <Button size="medium"
                     onClick={() => parent.deploy()}
                 ><Text>Deploy</Text></Button>
             </div>
@@ -40,7 +40,7 @@ export class EnterInfo extends React.Component {
                     placeholder={defaultInfo}
                 />
                 <br />
-                <MetaMaskButton  onClick={() => parent.enterInfo(info || defaultInfo)}>Submit Secret Info</MetaMaskButton><br/>
+                <Button size="medium" onClick={() => parent.enterInfo(info || defaultInfo)}>Submit Secret Info</Button><br/>
             </div>
         );
     }
@@ -62,7 +62,7 @@ export class EnterRequest extends React.Component {
                     placeholder={defaultRequestStandard}
                 />
                 <br /> <br />
-                <MetaMaskButton  onClick={() => parent.enterRequest(req || defaultRequestStandard)}>Submit request</MetaMaskButton><br/>
+                <Button  size="medium" mr={3} onClick={() => parent.enterRequest(req || defaultRequestStandard)}>Submit request</Button><br/>
             </div>
         );
     }
@@ -78,7 +78,7 @@ export class RunBackend extends React.Component {
                     to reveal secret info: <strong>{info}</strong>
                 </Text>
                 <Text>
-                    Your Address
+                    Your Address:
                 </Text>
                 <Text>
                     Ready to connect to the contract?
@@ -130,13 +130,13 @@ export class BackendRunning extends React.Component {
             {ctcInfoStr}
           </pre>
                     <br />
-                    <button
+                    <Button size="medium"
                         onClick={async (e) => this.copyToClipborad(e.currentTarget)}
-                    >Copy to clipboard</button>
+                    >Copy to clipboard</Button>
                     <br />
 
-                    You will be automatically prompted to approve the next transaction
-                    once Bob has paid the requested amount into the contract.
+                    <Text> will be automatically prompted to approve the next transaction
+                    once Bob has paid the requested amount into the contract.</Text>
                 </div>
             );
         }

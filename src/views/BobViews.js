@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Text } from "rimble-ui";
+import { Box, Button, Heading, Text } from "rimble-ui";
 
 export class RunBackend extends React.Component {
     render() {

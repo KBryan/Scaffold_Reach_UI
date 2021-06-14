@@ -22,6 +22,7 @@ function renderDOM() {
 class App extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {mode: 'ConnectAccount'}
   }
   async componentDidMount() { // from mode: ConnectAccount
@@ -70,6 +71,7 @@ class Alice extends React.Component {
   }
   async deploy() { // from mode: Deploy
     const ctc = this.props.acc.deploy(backend);
+
     this.setState({mode: 'EnterInfo', ctc});
     const ctcInfoStr = JSON.stringify(await ctc.getInfo(), null, 2);
     this.setState({ctcInfoStr});

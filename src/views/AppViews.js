@@ -1,6 +1,6 @@
 import React from 'react';
 import {  Button, Text } from "rimble-ui";
-
+import { ToastMessage } from 'rimble-ui';
 
 export class Wrapper extends React.Component {
     render() {
@@ -19,10 +19,8 @@ export class ConnectAccount extends React.Component {
     render() {
         return (
             <div>
-                <Text>
-                    Please wait while we connect to your account.
-                    If this takes more than a few seconds, there may be something wrong.
-                </Text>
+                <ToastMessage message={"Please wait while we connect to your account.\n" +
+                "                    If this takes more than a few seconds, there may be something wrong."} />
 
             </div>
         )
@@ -41,7 +39,7 @@ export class FundAccount extends React.Component {
             <div>
                 <h1>Fund account</h1>
                 <br />
-                Address: {addr}
+                Address:
                 <br />
                 Balance: {bal} {standardUnit}
                 <hr />
@@ -64,6 +62,7 @@ export class FundAccount extends React.Component {
 export class SelectRole extends React.Component {
     render() {
         const {parent} = this.props;
+
         return (
             <div>
                 <Text>
